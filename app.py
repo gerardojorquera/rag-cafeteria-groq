@@ -1,7 +1,6 @@
 import os
 from dotenv import load_dotenv
 from langchain_groq import ChatGroq
-#from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_huggingface import HuggingFaceEmbeddings
 # Ruta oficial y funcional para la clase FAISS
 from langchain_community.vectorstores import FAISS 
@@ -32,11 +31,6 @@ llm = ChatGroq(
 )
 
 # Generador de vectores gratuito ejecutado localmente o en el servidor de Render
-"""
-embeddings = HuggingFaceEmbeddings(
-    model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
-) """
-# Reemplaza por completo tu bloque de embeddings por este:
 embeddings = HuggingFaceEmbeddings(
     model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 )
