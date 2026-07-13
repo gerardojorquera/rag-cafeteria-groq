@@ -1,8 +1,7 @@
 import os
 from dotenv import load_dotenv
 from langchain_groq import ChatGroq
-# 1. CORRECCIÓN: Importación oficial y moderna desde langchain_huggingface
-from langchain_huggingface import HuggingFaceEndpointEmbeddings 
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS 
 from langchain_text_splitters import RecursiveCharacterTextSplitter 
 from langchain_core.prompts import ChatPromptTemplate 
@@ -29,10 +28,9 @@ llm = ChatGroq(
     temperature=0.3
 )
 
-# 2. CORRECCIÓN: Conector Serverless oficial (Consume 0 MB de RAM en Render)
-embeddings = HuggingFaceEndpointEmbeddings(
-    model="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
-    huggingfacehub_api_token=os.getenv("HF_TOKEN")
+# Generador de vectores gratuito ejecutado localmente o en el servidor de Render
+embeddings = HuggingFaceEmbeddings(
+    model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 )
 
 # Carga del documento de la cafetería
@@ -134,15 +132,14 @@ with gr.Blocks(title="Asistente Virtual - Café Aurora") as demo:
     )
 
 if __name__ == "__main__":
-    # Lee 'PORT' (inyectado por Render), si no existe usa 10000 como fallback por defecto
-    port = int(os.environ.get("PORT", 10000))
+    # Lee 'PORT' (inyectado por Render), si no existe usa 7860 como fallback
+    port = int(os.environ.get("PORT", 7860))
     
-    print(f"Iniciando Gradio de forma estricta en 0.0.0.0:{port}...") 
+    print(# Mensaje de depuración útil para los logs de Render
+        f"Iniciando Gradio en 0.0.0.0:{port}..."
+    ) 
     
-    # 3. CAMBIO: Agregamos parámetros de seguridad para estabilizar Gradio en servidores en la nube
     demo.launch(
         server_name="0.0.0.0", 
-        server_port=port,
-        share=False,               # Desactiva túneles públicos de Gradio (chocan con Render)
-        prevent_thread_lock=False  # Permite que el hilo principal retenga el servidor abierto
+        server_port=port
     )
