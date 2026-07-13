@@ -149,6 +149,5 @@ with gr.Blocks(title="Asistente Virtual - Café Aurora") as demo:
     )
 
 if __name__ == "__main__":
-    puerto = int(os.getenv("PORT", 7860))
-    demo.launch(server_name="0.0.0.0", server_port=puerto)
-    
+    port  = int(os.getenv("PORT", 7860))
+    demo.launch(server_name="0.0.0.0", server_port=port)
