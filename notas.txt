@@ -1,0 +1,30 @@
+Cómo Crear un Chatbot con IA para Negocios (RAG + LangChain Paso a Paso)
+https://www.youtube.com/watch?v=MWQwWfwT0WE
+
+#librerias
+OpenIA
+pip install python-dotenv langchain-openai langchain-community faiss-cpu langchain-text-splitters langchain-core gradio
+
+Deepseek
+pip install langchain-ollama
+
+http://localhost:7860/
+
+--- Para dejar publico:
+1) Subir la app a github
+2) publicarlo en render => https://render.com/ 
+    new/webservice
+    seleccionar github y la app
+    configurar:
+    region ohio mas cerca de sudamerica
+    verificar: 
+    1) build command:
+    pip install -r requirements.txt (pre-requisitos)
+    2) start command: python py.app
+    3) environment variables: 
+        OPEN_IA_KEY: XXXX
+        PYTHON_VERSION: 3.11.0
+
+--- Prompt
+Puedes modificar este codigo hecho en python para que utilice la inteligencia artificial 
+en la nube de Deepseek que su uso es gratuito, para poder posteriormente publicarlo en render.com
