@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 from langchain_groq import ChatGroq
+#from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_huggingface import HuggingFaceEmbeddings
 # Ruta oficial y funcional para la clase FAISS
 from langchain_community.vectorstores import FAISS 
@@ -11,6 +12,13 @@ from langchain_core.runnables import RunnablePassthrough
 import gradio as gr 
 
 load_dotenv()
+# --- LÍNEAS DE PRUEBA TEMPORALES ---
+print("=== VERIFICANDO VARIABLES DE ENTORNO ===")
+print(f"¿Groq Key cargada?: {os.getenv('GROQ_API_KEY') is not None}")
+print(f"¿HF Token cargado?: {os.getenv('HF_TOKEN') is not None}")
+if os.getenv('HF_TOKEN'):
+    print(f"Inicio del HF Token: {os.getenv('HF_TOKEN')[:7]}...")
+print("=========================================")
 
 # Cargar la API Key de Groq desde tu archivo .env
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
@@ -24,6 +32,11 @@ llm = ChatGroq(
 )
 
 # Generador de vectores gratuito ejecutado localmente o en el servidor de Render
+"""
+embeddings = HuggingFaceEmbeddings(
+    model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+) """
+# Reemplaza por completo tu bloque de embeddings por este:
 embeddings = HuggingFaceEmbeddings(
     model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 )
@@ -65,28 +78,6 @@ rag_chain = (
     | llm
     | StrOutputParser()
 )
-
-"""
-def responder(mensaje, historia):
-    return rag_chain.invoke(mensaje)
-
-demo = gr.ChatInterface(
-    fn=responder, 
-    title="Asistente Virtual - Café Aurora",
-    description="Pregúntame sobre nuestro menú, horarios, ubicación, eventos y más.",
-    examples=[
-        "¿Cuál es el horario de atención los sábados?",
-        "¿Tienen opciones veganas?",
-        "¿Cuánto cuesta un cappuccino?",
-        "¿Hacen delivery?",
-        "¿Tienen wifi?",
-    ],
-)
-
-if __name__ == "__main__":
-    puerto = int(os.getenv("PORT", 7860))
-    demo.launch(server_name="0.0.0.0", server_port=puerto)
-"""
 
 def responder(mensaje, historia):
     # Procesamos la pregunta en la cadena RAG con tu LLM (Groq)
@@ -147,11 +138,7 @@ with gr.Blocks(title="Asistente Virtual - Café Aurora") as demo:
         inputs=[txt_input, chatbot], 
         outputs=[txt_input, chatbot]
     )
-"""
-if __name__ == "__main__":
-    port  = int(os.getenv("PORT", 7860))
-    demo.launch(server_name="0.0.0.0", server_port=port)
-"""
+
 if __name__ == "__main__":
     # Lee 'PORT' (inyectado por Render), si no existe usa 7860 como fallback
     port = int(os.environ.get("PORT", 7860))

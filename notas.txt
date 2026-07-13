@@ -10,7 +10,8 @@ pip install langchain-ollama
 
 http://localhost:7860/
 
---- Para dejar publico:
+-- Para dejar publico
+-- Opcion 1) render: 
 1) Subir la app a github
 2) publicarlo en render => https://render.com/ 
     new/webservice
@@ -28,3 +29,7 @@ http://localhost:7860/
 --- Prompt
 Puedes modificar este codigo hecho en python para que utilice la inteligencia artificial 
 en la nube de Deepseek que su uso es gratuito, para poder posteriormente publicarlo en render.com
+
+-- Opcion 2) Subir la app a huggingface
+https://huggingface.co/
+¡Excelente decisión! Subir tu aplicación a Hugging Face Spaces es la mejor opción para este proyecto. Como Spaces está diseñado nativamente para Gradio y ofrece 16 GB de RAM gratuitos, tu modelo de embeddings se descargará y ejecutará en segundos sin problemas de memoria ni de puertos.Aquí tienes el paso a paso detallado para realizar la migración:Paso 1: Crear tu cuenta y el Espacio en Hugging FaceEntra a huggingface.co y crea una cuenta si aún no tienes una.Una vez dentro, haz clic en tu foto de perfil (esquina superior derecha) y selecciona New Space (Nuevo Espacio).Configura los siguientes campos:Space name: El nombre de tu app (por ejemplo, cafe-aurora-bot).SDK: Selecciona Gradio.Gradio template: Elige Blank (Limpio).Space hardware: Asegúrate de que esté seleccionado CPU Basic (Free - 16GB RAM).Visibility: Puedes elegir Public (Público) para que cualquiera pueda usarlo, o Private (Privado) solo para ti.

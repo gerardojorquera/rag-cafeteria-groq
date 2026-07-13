@@ -1,0 +1,26 @@
+"""
+if __name__ == "__main__":
+    port  = int(os.getenv("PORT", 7860))
+    demo.launch(server_name="0.0.0.0", server_port=port)
+"""
+"""
+def responder(mensaje, historia):
+    return rag_chain.invoke(mensaje)
+
+demo = gr.ChatInterface(
+    fn=responder, 
+    title="Asistente Virtual - Café Aurora",
+    description="Pregúntame sobre nuestro menú, horarios, ubicación, eventos y más.",
+    examples=[
+        "¿Cuál es el horario de atención los sábados?",
+        "¿Tienen opciones veganas?",
+        "¿Cuánto cuesta un cappuccino?",
+        "¿Hacen delivery?",
+        "¿Tienen wifi?",
+    ],
+)
+
+if __name__ == "__main__":
+    puerto = int(os.getenv("PORT", 7860))
+    demo.launch(server_name="0.0.0.0", server_port=puerto)
+"""

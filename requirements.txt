@@ -35,7 +35,7 @@ jsonpatch==1.33
 jsonpointer==3.1.1
 langchain==1.3.13
 langchain-classic==1.0.8
-langchain-community==0.4.2
+langchain-huggingface
 langchain-core==1.4.9
 langchain-groq==1.1.3
 langchain-huggingface==1.2.2
