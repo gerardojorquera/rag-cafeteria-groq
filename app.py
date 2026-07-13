@@ -147,7 +147,21 @@ with gr.Blocks(title="Asistente Virtual - Café Aurora") as demo:
         inputs=[txt_input, chatbot], 
         outputs=[txt_input, chatbot]
     )
-
+"""
 if __name__ == "__main__":
     port  = int(os.getenv("PORT", 7860))
     demo.launch(server_name="0.0.0.0", server_port=port)
+"""
+if __name__ == "__main__":
+    # Lee 'PORT' (inyectado por Render), si no existe usa 7860 como fallback
+    port = int(os.environ.get("PORT", 7860))
+    
+    print(# Mensaje de depuración útil para los logs de Render
+        f"Iniciando Gradio en 0.0.0.0:{port}..."
+    ) 
+    
+    demo.launch(
+        server_name="0.0.0.0", 
+        server_port=port,
+        share=False  # Crucial: desactiva los enlaces públicos temporales de Gradio
+    )
