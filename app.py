@@ -100,7 +100,37 @@ with gr.Blocks(title="Asistente Virtual - Café Aurora") as demo:
     )
     
     gr.Markdown("### 💡 Preguntas Frecuentes:")
+
+        # 1. Los ejemplos en gr.Examples requieren estar en formato de lista de listas [[str]]
+    ejemplos_lista = [
+        ["¿Horario los sábados?"],
+        ["¿Opciones veganas?"],
+        ["¿Precio cappuccino?"],
+        ["¿Hacen delivery?"],
+        ["¿Tienen wifi?"],
+    ]
     
+    # 2. Creamos el componente nativo de Gradio
+    ejemplos_componente = gr.Examples(
+        examples=ejemplos_lista,
+        inputs=txt_input,  # Vincula el clic del ejemplo directamente a la caja de texto
+        label=None
+    )
+    
+    # 3. TRUCO DE CONEXIÓN: Hacemos que al hacer clic en un ejemplo, 
+    # se ejecute AUTOMÁTICAMENTE la función 'responder' y luego se devuelva el foco
+    ejemplos_componente.dataset.click(
+        fn=responder,
+        inputs=[txt_input, chatbot],
+        outputs=[txt_input, chatbot]
+    ).then(
+        fn=None,
+        inputs=None,
+        outputs=None,
+        js="() => { document.querySelector('textarea, input[type=text]').focus(); }"
+    )
+
+    """    
     ejemplos = [
         "¿Horario los sábados?",
         "¿Opciones veganas?",
@@ -108,7 +138,7 @@ with gr.Blocks(title="Asistente Virtual - Café Aurora") as demo:
         "¿Hacen delivery?",
         "¿Tienen wifi?",
     ]
-    
+
     # Fila compacta para visualizar todo en una sola pantalla sin scroll vertical
     with gr.Row(variant="compact"):
         for texto_ejemplo in ejemplos:
@@ -125,13 +155,24 @@ with gr.Blocks(title="Asistente Virtual - Café Aurora") as demo:
                 outputs=None,
                 js="() => { document.querySelector('textarea, input[type=text]').focus(); }"
             )
-        
+    """
+
     # Acción al presionar 'Enter' en la caja de texto principal
     txt_input.submit(
         fn=responder, 
         inputs=[txt_input, chatbot], 
         outputs=[txt_input, chatbot]
     )
+
+    # ==========================================
+    # NUEVO CAMBIO: Foco automático al abrir la página
+    # ==========================================
+    demo.load(
+        fn=None,
+        inputs=None,
+        outputs=None,
+        js="() => { setTimeout(() => { document.querySelector('textarea, input[type=text]').focus(); }, 500); }"
+    )    
 
 if __name__ == "__main__":
     # Lee 'PORT' (inyectado por Render), si no existe usa 10000 como fallback por defecto
